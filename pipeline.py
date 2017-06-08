@@ -35,7 +35,7 @@ hist_feat = dist_pickle["hist_feat"]
 hog_feat = dist_pickle["hog_feat"]
 
 #Parameters
-ystart = 360
+ystart = 386
 ystop = 656
 y_start_stop = [ystart, ystop] # Min and max in y to search in slide_window()
 scale = 1.5
@@ -370,7 +370,7 @@ def draw_boxes(img, bboxes, color=(0, 0, 255), thick=6):
     return imcopy
 
 
-windows_from_prev_cycle = deque(maxlen = 25)
+windows_from_prev_cycle = deque(maxlen = 15)
 
 def pipeline(image, persistance=True):
     draw_img = image.copy()
@@ -392,7 +392,9 @@ def pipeline(image, persistance=True):
 
     if persistance:
         global windows_from_prev_cycle
-        hot_windows = windows + list(windows_from_prev_cycle)
+        hot_windows = []
+        for box_list in windows_from_prev_cycle:
+            hot_windows += box_list
     else:
         hot_windows = windows
 
@@ -402,7 +404,8 @@ def pipeline(image, persistance=True):
     heat = add_heat(heat,hot_windows)
         
     # Apply threshold to help remove false positives
-    heat = apply_threshold(heat, max(6,len(windows_from_prev_cycle)//5))
+    heat = apply_threshold(heat, len(windows_from_prev_cycle))
+    #print(heat.max())
 
     # Visualize the heatmap when displaying    
     heatmap = np.clip(heat, 0, 255)
@@ -412,7 +415,7 @@ def pipeline(image, persistance=True):
 
     if persistance:
         #new_bboxes = label_to_box(labels)
-        windows_from_prev_cycle.extend(windows)
+        windows_from_prev_cycle.append(windows)
 
     draw_img = draw_labeled_bboxes(draw_img, labels)
 

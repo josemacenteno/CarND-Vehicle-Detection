@@ -9,9 +9,9 @@ from pipeline import *
 
 
 
-frame_counter = 0
+#frame_counter = 0
 def process_image(image):
-    global frame_counter
+    #global frame_counter
     result = pipeline(image)
 
     # output_name = "./video_clip/video" + str(frame_counter) + ".jpg"
@@ -20,17 +20,17 @@ def process_image(image):
 
     # cv2.imshow("img", result)
     # cv2.waitKey(10)
-    frame_counter += 1
+    #frame_counter += 1
     return result
 
 
-#clip1 = VideoFileClip("project_video.mp4")
+clip1 = VideoFileClip("project_video.mp4")
 #clip1 = VideoFileClip("test_video.mp4")
-clip1 = VideoFileClip("project_video.mp4").subclip(4,8)
+#clip1 = VideoFileClip("project_video.mp4").subclip(4,24)
 white_clip = clip1.fl_image(process_image) #NOTE: this function expects color images!!
 
+white_output = 'video_output.mp4'
 #white_output = 'test_video_output.mp4'
-#white_output = 'video_output.mp4'
-white_output = 'clip_video_output.mp4'
+#white_output = 'clip_video_output.mp4'
 
 white_clip.write_videofile(white_output, audio=False)
