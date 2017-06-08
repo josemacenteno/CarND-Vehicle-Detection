@@ -22,8 +22,8 @@ from sklearn.model_selection import train_test_split
 #from sklearn.cross_validation import train_test_split
 
 #TODO: separate and hangle GTI images as they are from a Video sequence
-notcar_image_names = glob.glob('./data/non-vehicles/Extras/*.png')
-car_image_names = glob.glob('./data/vehicles/KITTI_extracted/*.png')
+notcar_image_names = glob.glob('./data/non-vehicles/*/*.png')
+car_image_names = glob.glob('./data/vehicles/*/*.png')
 
 # Read in car and non-car images
 cars = []
