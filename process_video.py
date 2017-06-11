@@ -9,13 +9,13 @@ def process_image(image):
     return result
 
 
-#clip1 = VideoFileClip("project_video.mp4")
-clip1 = VideoFileClip("test_video.mp4")
+clip1 = VideoFileClip("project_video.mp4")
+#clip1 = VideoFileClip("test_video.mp4")
 #clip1 = VideoFileClip("project_video.mp4").subclip(4,24)
 processed_clip = clip1.fl_image(process_image) #NOTE: this function expects color images!!
 
-#output_name = 'video_output.mp4'
-output_name = 'test_video_output.mp4'
+output_name = 'video_output.mp4'
+#output_name = 'test_video_output.mp4'
 #output_name = 'clip_video_output.mp4'
 
 processed_clip.write_videofile(output_name, audio=False)

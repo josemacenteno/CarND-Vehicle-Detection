@@ -176,6 +176,12 @@ def draw_labeled_bboxes(img, labels):
 windows_from_prev_cycle = deque(maxlen = 15)
 
 def pipeline(image, persistance=True):
+    """
+    Pipeline searches for cars on an image using a Support Vector Machine.
+    Set the presistance flag True to keep a record of previous car detections
+    and use it in subsequent image searches. The persistance information 
+    is used to reduce the chance of getting false positive detections.
+    """
     draw_img = image.copy()
     image = image.astype(np.float32)/255
 
@@ -197,7 +203,6 @@ def pipeline(image, persistance=True):
         
     # Apply threshold to help remove false positives
     heat = apply_threshold(heat, len(windows_from_prev_cycle))
-    #print(heat.max())
 
     # Visualize the heatmap when displaying    
     heatmap = np.clip(heat, 0, 255)

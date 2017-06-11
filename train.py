@@ -4,16 +4,13 @@ import pickle
 import numpy as np
 import cv2
 import glob
-import math
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
-from moviepy.editor import VideoFileClip
 from pipeline import *
 import time
 from skimage.feature import hog
 from sklearn.preprocessing import StandardScaler
 from sklearn.svm import LinearSVC
-
 
 # NOTE: the next import is only valid 
 # for scikit-learn version <= 0.17
