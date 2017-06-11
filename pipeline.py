@@ -32,7 +32,7 @@ scale = 1.5
 
 # Define a single function that can extract features using hog sub-sampling and make predictions
 def find_cars(img, ystart, ystop, scale, svc, X_scaler, orient, pix_per_cell, cell_per_block, color_space, spatial_size, hist_bins):
-    img = img.astype(np.float32)/255
+    #img = img.astype(np.float32)/255
     
     img_tosearch = img[ystart:ystop,:,:]
     ctrans_tosearch = convert_color(img_tosearch, conv='RGB2' + color_space)
@@ -171,7 +171,7 @@ def draw_labeled_bboxes(img, labels):
         # Define a bounding box based on min/max x and y
         bbox = ((np.min(nonzerox), np.min(nonzeroy)), (np.max(nonzerox), np.max(nonzeroy)))
         # Draw the box on the image
-        cv2.rectangle(img, bbox[0], bbox[1], (0,0,255), 6)
+        cv2.rectangle(img, bbox[0], bbox[1], (255,0,0), 6)
     # Return the image
     return img
 
@@ -185,7 +185,6 @@ def pipeline(image, persistance=True):
     is used to reduce the chance of getting false positive detections.
     """
     draw_img = image.copy()
-    image = image.astype(np.float32)/255
 
     windows = find_cars(image, ystart, ystop, scale, svc, X_scaler, orient,
                         pix_per_cell, cell_per_block, color_space, spatial_size, hist_bins)              

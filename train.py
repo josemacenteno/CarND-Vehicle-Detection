@@ -4,8 +4,6 @@ import pickle
 import numpy as np
 import cv2
 import glob
-import matplotlib.pyplot as plt
-import matplotlib.image as mpimg
 import time
 from skimage.feature import hog
 from sklearn.preprocessing import StandardScaler
@@ -14,10 +12,21 @@ from sklearn.model_selection import train_test_split
 from pipeline import *
 
 #TODO: separate and hangle GTI images as they are from a Video sequence
-notcar_image_names = glob.glob('./data/non-vehicles/GTI/*.png')
-car_image_names = glob.glob('./data/vehicles/GTI_Right/*.png')
-
+notcar_image_names = glob.glob('./data/non-vehicles/*/*.png')
+car_image_names = glob.glob('./data/vehicles/*/*.png')
 print(len(notcar_image_names), len(car_image_names))
+
+
+### TODO: Tweak these parameters and see how the results change.
+color_space = 'YCrCb' # Can be RGB, HSV, LUV, HLS, YUV, YCrCb
+orient = 9  # HOG orientations
+pix_per_cell = 8 # HOG pixels per cell
+cell_per_block = 2 # HOG cells per block
+spatial_size = (16, 16) # Spatial binning dimensions
+hist_bins = 12    # Number of histogram bins
+spatial_feat = True # Spatial features on or off
+hist_feat = True # Histogram features on or off
+hog_feat = True # HOG features on or off
 
 # Read in car and non-car images
 cars = []
@@ -54,7 +63,7 @@ def get_hog_features(img, orient, pix_per_cell, cell_per_block,
 # Have this function call bin_spatial() and color_hist()
 def extract_features(imgs, color_space='RGB', spatial_size=(32, 32),
                         hist_bins=32, orient=9, 
-                        pix_per_cell=8, cell_per_block=2, hog_channel=0,
+                        pix_per_cell=8, cell_per_block=2,
                         spatial_feat=True, hist_feat=True, hog_feat=True):
     # Create a list to append feature vectors to
     features = []
@@ -62,10 +71,9 @@ def extract_features(imgs, color_space='RGB', spatial_size=(32, 32),
     for file in imgs:
         file_features = []
         # Read in each one by one
-        image = mpimg.imread(file)
-        # apply color conversion if other than 'RGB'
-
-        feature_image = convert_color(image, conv='RGB2' + color_space)
+        image = cv2.imread(file)
+        # color conversion
+        feature_image = convert_color(image, conv='BGR2' + color_space)
 
         if spatial_feat == True:
             spatial_features = bin_spatial(feature_image, size=spatial_size)
@@ -76,16 +84,12 @@ def extract_features(imgs, color_space='RGB', spatial_size=(32, 32),
             file_features.append(hist_features)
         if hog_feat == True:
         # Call get_hog_features() with vis=False, feature_vec=True
-            if hog_channel == 'ALL':
-                hog_features = []
-                for channel in range(feature_image.shape[2]):
-                    hog_features.append(get_hog_features(feature_image[:,:,channel], 
-                                        orient, pix_per_cell, cell_per_block, 
-                                        vis=False, feature_vec=True))
-                hog_features = np.ravel(hog_features)        
-            else:
-                hog_features = get_hog_features(feature_image[:,:,hog_channel], orient, 
-                            pix_per_cell, cell_per_block, vis=False, feature_vec=True)
+            hog_features = []
+            for channel in range(feature_image.shape[2]):
+                hog_features.append(get_hog_features(feature_image[:,:,channel], 
+                                    orient, pix_per_cell, cell_per_block, 
+                                    vis=False, feature_vec=True))
+            hog_features = np.ravel(hog_features)        
             # Append the new feature vector to the features list
             file_features.append(hog_features)
         features.append(np.concatenate(file_features))
@@ -100,29 +104,17 @@ def extract_features(imgs, color_space='RGB', spatial_size=(32, 32),
 # cars = cars[0:sample_size]
 # notcars = notcars[0:sample_size]
 
-### TODO: Tweak these parameters and see how the results change.
-color_space = 'YCrCb' # Can be RGB, HSV, LUV, HLS, YUV, YCrCb
-orient = 9  # HOG orientations
-pix_per_cell = 8 # HOG pixels per cell
-cell_per_block = 2 # HOG cells per block
-hog_channel = 'ALL'  # Can be 0, 1, 2, or "ALL"
-spatial_size = (16, 16) # Spatial binning dimensions
-hist_bins = 12    # Number of histogram bins
-spatial_feat = True # Spatial features on or off
-hist_feat = True # Histogram features on or off
-hog_feat = True # HOG features on or off
-
 car_features = extract_features(cars, color_space=color_space, 
                         spatial_size=spatial_size, hist_bins=hist_bins, 
                         orient=orient, pix_per_cell=pix_per_cell, 
                         cell_per_block=cell_per_block, 
-                        hog_channel=hog_channel, spatial_feat=spatial_feat, 
+                        spatial_feat=spatial_feat, 
                         hist_feat=hist_feat, hog_feat=hog_feat)
 notcar_features = extract_features(notcars, color_space=color_space, 
                         spatial_size=spatial_size, hist_bins=hist_bins, 
                         orient=orient, pix_per_cell=pix_per_cell, 
                         cell_per_block=cell_per_block, 
-                        hog_channel=hog_channel, spatial_feat=spatial_feat, 
+                        spatial_feat=spatial_feat, 
                         hist_feat=hist_feat, hog_feat=hog_feat)
 
 X = np.vstack((car_features, notcar_features)).astype(np.float64)                        
@@ -187,9 +179,4 @@ print("saving classifier and parameters here:\n\t" + dist_out_path)
 with open(dist_out_path, 'wb') as p_out:
     # Pickle the 'data' dictionary using the highest protocol available.
     pickle.dump(dist_pickle, p_out)
-
-
-image = mpimg.imread('./test_images/bbox-example-image.jpg')
-draw_image = np.copy(image)
-
 print("Done")
