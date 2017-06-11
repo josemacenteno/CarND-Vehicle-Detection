@@ -131,7 +131,9 @@ def bin_spatial(img, size=(32, 32)):
     # Return the feature vector
     return features
 
-# Define a function to compute color histogram features  
+
+# Define a function to compute color histogram features 
+#TODO: make sure images are always 0-255 
 def color_hist(img, nbins=32, bins_range=(0, 256)):
     # Compute the histogram of the color channels separately
     channel1_hist = np.histogram(img[:,:,0], bins=nbins, range=bins_range)
