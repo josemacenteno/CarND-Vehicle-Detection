@@ -61,7 +61,7 @@ def get_hog_features(img, orient, pix_per_cell, cell_per_block,
 
 # Define a function to extract features from a list of images
 # Have this function call bin_spatial() and color_hist()
-def extract_features(imgs, color_space='RGB', spatial_size=(32, 32),
+def extract_features(imgs, color_space='BGR', spatial_size=(32, 32),
                         hist_bins=32, orient=9, 
                         pix_per_cell=8, cell_per_block=2,
                         spatial_feat=True, hist_feat=True, hog_feat=True):
