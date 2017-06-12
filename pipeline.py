@@ -110,6 +110,7 @@ def convert_color(img, conv='RGB2YCrCb'):
     if conv == 'RGB2LUV':
         return cv2.cvtColor(img, cv2.COLOR_RGB2LUV)
 
+# Define a function to return HOG features and visualization
 def get_hog_features(img, orient, pix_per_cell, cell_per_block, 
                         vis=False, feature_vec=True):
     # Call with two outputs if vis==True
@@ -117,7 +118,7 @@ def get_hog_features(img, orient, pix_per_cell, cell_per_block,
         features, hog_image = hog(img, orientations=orient, 
                                   pixels_per_cell=(pix_per_cell, pix_per_cell),
                                   cells_per_block=(cell_per_block, cell_per_block), 
-                                  transform_sqrt=False, 
+                                  transform_sqrt=True, 
                                   visualise=vis, feature_vector=feature_vec)
         return features, hog_image
     # Otherwise call with one output
@@ -125,7 +126,7 @@ def get_hog_features(img, orient, pix_per_cell, cell_per_block,
         features = hog(img, orientations=orient, 
                        pixels_per_cell=(pix_per_cell, pix_per_cell),
                        cells_per_block=(cell_per_block, cell_per_block), 
-                       transform_sqrt=False, 
+                       transform_sqrt=True, 
                        visualise=vis, feature_vector=feature_vec)
         return features
 
@@ -210,7 +211,7 @@ def pipeline(image, persistance=True, in_color_channel = "RGB"):
     heat = add_heat(heat,hot_windows + windows + small_windows)
         
     # Apply threshold to help remove false positives
-    heat = apply_threshold(heat, len(windows_from_prev_cycle))
+    heat = apply_threshold(heat, min(len(small_windows),len(windows),len(windows_from_prev_cycle)))
 
     # Visualize the heatmap when displaying    
     heatmap = np.clip(heat, 0, 255)
