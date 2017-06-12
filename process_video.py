@@ -11,7 +11,7 @@ def process_image(image):
 
 clip1 = VideoFileClip("project_video.mp4")
 #clip1 = VideoFileClip("test_video.mp4")
-#clip1 = VideoFileClip("project_video.mp4").subclip(4,24)
+#clip1 = VideoFileClip("project_video.mp4").subclip(21,30)
 processed_clip = clip1.fl_image(process_image) #NOTE: this function expects color images!!
 
 output_name = 'video_output.mp4'

@@ -25,17 +25,22 @@ hist_feat = dist_pickle["hist_feat"]
 hog_feat = dist_pickle["hog_feat"]
 
 #Parameters to define search windows and region of interest
+ystart_small = 386
+ystop_small = 486
+scale_small = 0.8
+y_start_stop_small = [ystart_small, ystop_small] # Min and max in y to search in slide_window()
 ystart = 386
 ystop = 656
 y_start_stop = [ystart, ystop] # Min and max in y to search in slide_window()
 scale = 1.5
 
 # Define a single function that can extract features using hog sub-sampling and make predictions
-def find_cars(img, ystart, ystop, scale, svc, X_scaler, orient, pix_per_cell, cell_per_block, color_space, spatial_size, hist_bins):
+def find_cars(img, in_color_channel, ystart, ystop, scale, svc, X_scaler, orient, pix_per_cell, cell_per_block, color_space, spatial_size, hist_bins):
     #img = img.astype(np.float32)/255
     
     img_tosearch = img[ystart:ystop,:,:]
-    ctrans_tosearch = convert_color(img_tosearch, conv='RGB2' + color_space)
+    ctrans_tosearch = convert_color(img_tosearch, conv=in_color_channel + '2' + color_space)
+
     if scale != 1:
         imshape = ctrans_tosearch.shape
         ctrans_tosearch = cv2.resize(ctrans_tosearch, (np.int(imshape[1]/scale), np.int(imshape[0]/scale)))
@@ -175,9 +180,9 @@ def draw_labeled_bboxes(img, labels):
     # Return the image
     return img
 
-windows_from_prev_cycle = deque(maxlen = 15)
+windows_from_prev_cycle = deque(maxlen = 25)
 
-def pipeline(image, persistance=True):
+def pipeline(image, persistance=True, in_color_channel = "RGB"):
     """
     Pipeline searches for cars on an image using a Support Vector Machine.
     Set the presistance flag True to keep a record of previous car detections
@@ -186,21 +191,23 @@ def pipeline(image, persistance=True):
     """
     draw_img = image.copy()
 
-    windows = find_cars(image, ystart, ystop, scale, svc, X_scaler, orient,
-                        pix_per_cell, cell_per_block, color_space, spatial_size, hist_bins)              
-
+    windows = find_cars(image, in_color_channel, ystart, ystop, scale, svc, X_scaler, orient,
+                        pix_per_cell, cell_per_block, color_space, spatial_size, hist_bins) 
+    small_windows = find_cars(image, in_color_channel, ystart_small, ystop_small, scale_small,
+                        svc, X_scaler, orient, pix_per_cell, cell_per_block, color_space,
+                        spatial_size, hist_bins)              
     if persistance:
         global windows_from_prev_cycle
         hot_windows = []
         for box_list in windows_from_prev_cycle:
             hot_windows += box_list
     else:
-        hot_windows = windows
+        hot_windows = []
 
     heat = np.zeros_like(image[:,:,0]).astype(np.float)
     
     # Add heat to each box in box list
-    heat = add_heat(heat,hot_windows)
+    heat = add_heat(heat,hot_windows + windows + small_windows)
         
     # Apply threshold to help remove false positives
     heat = apply_threshold(heat, len(windows_from_prev_cycle))
@@ -212,7 +219,7 @@ def pipeline(image, persistance=True):
     labels = label(heatmap)
 
     if persistance:
-        windows_from_prev_cycle.append(windows)
+        windows_from_prev_cycle.append(windows + small_windows)
 
     draw_img = draw_labeled_bboxes(draw_img, labels)
 

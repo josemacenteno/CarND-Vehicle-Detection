@@ -6,8 +6,9 @@ from pipeline import *
 #Aplying pipeline to all test images
 print("Applying pipeline to test images from ./test_images/...")
 for image_name in glob.glob('./test_images/test*.jpg'):
+    print(image_name)
     image =  cv2.imread(image_name) 
-    pipelined = pipeline(image, persistance=False)
+    pipelined = pipeline(image, persistance=False, in_color_channel = 'BGR')
     small = cv2.resize(cv2.imread(image_name),(256, 144))
     small_p = cv2.resize(pipelined,(256, 144))
 
