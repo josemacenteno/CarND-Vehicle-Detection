@@ -68,7 +68,7 @@ I experimented on the quiz from class to choose the color space YCrCb, as it gav
 
 In the quiz and the project I used  `skimage.feature.hog()` parameters (`orientations`, `pixels_per_cell`, and `cells_per_block`).  
 
-Here is an example using the `YCrCb` color space and HOG parameters of `orientations=8`, `pixels_per_cell=(8, 8)` and `cells_per_block=(2, 2)`:
+Here is an example using the `YCrCb` color space and HOG parameters of `orientations=9`, `pixels_per_cell=(8, 8)` and `cells_per_block=(2, 2)`:
 
 
 ![alt text][image2]
