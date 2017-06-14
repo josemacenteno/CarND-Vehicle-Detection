@@ -54,9 +54,13 @@ The code for this step is contained in the first code cell of the IPython notebo
 I started by reading in all the `vehicle` and `non-vehicle` images.  Here is an example of one of each of the `vehicle` and `non-vehicle` classes:
 
 ![alt text][data_car_0]        ![alt text][data_notcar_0]
+
 ![alt text][data_car_1]        ![alt text][data_notcar_1]
+
 ![alt text][data_car_2]        ![alt text][data_notcar_2]
+
 ![alt text][data_car_3]        ![alt text][data_notcar_3]
+
 ![alt text][data_car_4]        ![alt text][data_notcar_4]
 
 
@@ -92,6 +96,8 @@ Tha code after the fitting the classifier simply stores the classifier state in 
 ###Sliding Window Search
 
 ####1. Describe how (and identify where in your code) you implemented a sliding window search.  How did you decide what scales to search and how much to overlap windows?
+
+
 
 
 
