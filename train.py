@@ -130,8 +130,6 @@ print('Test Accuracy of SVC = ', round(svc.score(X_test, y_test), 4))
 # Check the prediction time for a single sample
 t=time.time()
 
-
-
 # svc = dist_pickle["svc"]
 # X_scaler = dist_pickle["scaler"]
 # orient = dist_pickle["orient"]

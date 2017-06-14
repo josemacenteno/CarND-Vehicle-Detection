@@ -14,8 +14,17 @@ The goals / steps of this project are the following:
 [hog_o1]: ./output_images/hog/original_test1.jpg "Original test1"
 [hog_t1]: ./output_images/hog/hog_test1.jpg      "hog test1"
 
-[data_car_0]: ./data/vehicles/GTI_MiddleClose/image0000.png "car data 0"
+[data_car_0]: ./data/vehicles/GTI_Far/image0000.png "car data 0"
+[data_car_1]: ./data/vehicles/GTI_Left/image0009.png "car data 1"
+[data_car_2]: ./data/vehicles/GTI_Left/image0010.png "car data 2"
+[data_car_3]: ./data/vehicles/GTI_MiddleClose/image0000.png "car data 3"
+[data_car_4]: ./data/vehicles/GTI_Right/image0000.png "car data 4"
+
 [data_notcar_0]: ./data/non-vehicles/Extras/extra1.png "notcar data 0"
+[data_notcar_1]: ./data/non-vehicles/Extras/extra100.png "notcar data 1"
+[data_notcar_2]: ./data/non-vehicles/Extras/extra2.png "notcar data 2"
+[data_notcar_3]: ./data/non-vehicles/Extras/extra3.png "notcar data 3"
+[data_notcar_4]: ./data/non-vehicles/Extras/extra4.png "notcar data 4"
 
 [image1]: ./examples/car_not_car.png
 [image2]: ./examples/HOG_example.jpg
@@ -45,6 +54,10 @@ The code for this step is contained in the first code cell of the IPython notebo
 I started by reading in all the `vehicle` and `non-vehicle` images.  Here is an example of one of each of the `vehicle` and `non-vehicle` classes:
 
 ![alt text][data_car_0]        ![alt text][data_notcar_0]
+![alt text][data_car_1]        ![alt text][data_notcar_1]
+![alt text][data_car_2]        ![alt text][data_notcar_2]
+![alt text][data_car_3]        ![alt text][data_notcar_3]
+![alt text][data_car_4]        ![alt text][data_notcar_4]
 
 
 I experimented on the quiz from class to choose the color space YCrCb, as it gave the best results measured by the SVC model accuracy on the a random training set. 
@@ -58,15 +71,29 @@ Here is an example using the `YCrCb` color space and HOG parameters of `orientat
 
 ####2. Explain how you settled on your final choice of HOG parameters.
 
-I tried various combinations of parameters and...
+I started form the parameters that worked best in the quizes and turns out those gave good enough values for most cars. THese are the three parameters used during training and pipeline:
+
+```
+orient = 9  # HOG orientations
+pix_per_cell = 8 # HOG pixels per cell
+cell_per_block = 2 # HOG cells per block
+```
+
+I also used histogram and spatial features as suggested from the quizes and excercises. I used the X_scaler from sklearn to balance the heterogeneous nature of the aggregated hog, histogram and hog features.
 
 ####3. Describe how (and identify where in your code) you trained a classifier using your selected HOG features (and color features if you used them).
 
-I trained a linear SVM using...
+The tagets are defined in the `train.py` file line 107 as 1 for cars and 0 for not_cars. The set of features and targets is split using train_test_split from sklearn. 
+
+Finally the actual training of a linear classifier is defined in `train.py` between the lines 119 and 125.
+
+Tha code after the fitting the classifier simply stores the classifier state in a pickle file, together with all the parameters used to define the "feature extraction" and the scaler. A pickle file is the recommended way to store a trained classifier according to sklearn documentation. 
 
 ###Sliding Window Search
 
 ####1. Describe how (and identify where in your code) you implemented a sliding window search.  How did you decide what scales to search and how much to overlap windows?
+
+
 
 I decided to search random window positions at random scales all over the image and came up with this (ok just kidding I didn't actually ;):
 
