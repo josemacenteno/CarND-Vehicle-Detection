@@ -36,18 +36,18 @@ The goals / steps of this project are the following:
 [video1]: ./project_video.mp4
 
 ## [Rubric](https://review.udacity.com/#!/rubrics/513/view) Points
-###Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
+### Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
 
 ---
-###Writeup / README
+### Writeup
 
-####1. Provide a Writeup / README that includes all the rubric points and how you addressed each one.  You can submit your writeup as markdown or pdf.
+#### 1. Provide a Writeup / README that includes all the rubric points and how you addressed each one.  You can submit your writeup as markdown or pdf.
 
 You're reading it!
 
-###Histogram of Oriented Gradients (HOG)
+### Histogram of Oriented Gradients (HOG)
 
-####1. Explain how (and identify where in your code) you extracted HOG features from the training images.
+#### 1. Explain how (and identify where in your code) you extracted HOG features from the training images.
 
 The code for this step is contained in the first code cell of the IPython notebook (or in lines # through # of the file called `some_file.py`).  
 
@@ -73,9 +73,9 @@ Here is an example using the `YCrCb` color space and HOG parameters of `orientat
 
 ![alt text][image2]
 
-####2. Explain how you settled on your final choice of HOG parameters.
+#### 2. Explain how you settled on your final choice of HOG parameters.
 
-I started form the parameters that worked best in the quizes and turns out those gave good enough values for most cars. THese are the three parameters used during training and pipeline:
+I started form the parameters that worked best in the quizes and turns out those gave good enough values for most cars. These are the three parameters used during training and pipeline:
 
 ```
 orient = 9  # HOG orientations
@@ -85,7 +85,7 @@ cell_per_block = 2 # HOG cells per block
 
 I also used histogram and spatial features as suggested from the quizes and excercises. I used the X_scaler from sklearn to balance the heterogeneous nature of the aggregated hog, histogram and hog features.
 
-####3. Describe how (and identify where in your code) you trained a classifier using your selected HOG features (and color features if you used them).
+#### 3. Describe how (and identify where in your code) you trained a classifier using your selected HOG features (and color features if you used them).
 
 The tagets are defined in the `train.py` file line 107 as 1 for cars and 0 for not_cars. The set of features and targets is split using train_test_split from sklearn. 
 
@@ -93,9 +93,9 @@ Finally the actual training of a linear classifier is defined in `train.py` betw
 
 Tha code after the fitting the classifier simply stores the classifier state in a pickle file, together with all the parameters used to define the "feature extraction" and the scaler. A pickle file is the recommended way to store a trained classifier according to sklearn documentation. 
 
-###Sliding Window Search
+### Sliding Window Search
 
-####1. Describe how (and identify where in your code) you implemented a sliding window search.  How did you decide what scales to search and how much to overlap windows?
+#### 1. Describe how (and identify where in your code) you implemented a sliding window search.  How did you decide what scales to search and how much to overlap windows?
 
 The main code to ferform the sliding window search is in the function `find_car` in `pipeline.py` lines 38 to 85. The image is first cropped by the ystart and ystop parameters, then resized based on a scaling factor. The scale fator implies a different window size with respect to the original image. In the main pipeline code I make two searches with find_car(), one for small windows in the center of the image (where far away cars would appear, and another search with larger windows on the bottom half of the image, which is better to identify close, therefore large, cars.
 
@@ -104,7 +104,7 @@ There is no overlap in my windows to make the search faster. Here are ac ouple o
 #TODO: Add images for the final windows used
 ![alt text][image3]
 
-####2. Show some examples of test images to demonstrate how your pipeline is working.  What did you do to optimize the performance of your classifier?
+#### 2. Show some examples of test images to demonstrate how your pipeline is working.  What did you do to optimize the performance of your classifier?
 
 Ultimately I searched on two scales using YCrCb 3-channel HOG features plus spatially binned color and histograms of color in the feature vector, which provided a nice result.  Here are some example images:
 
@@ -115,11 +115,11 @@ Ultimately I searched on two scales using YCrCb 3-channel HOG features plus spat
 
 ### Video Implementation
 
-####1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (somewhat wobbly or unstable bounding boxes are ok as long as you are identifying the vehicles most of the time with minimal false positives.)
+#### 1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (somewhat wobbly or unstable bounding boxes are ok as long as you are identifying the vehicles most of the time with minimal false positives.)
 Here's a [link to my video result](./project_video.mp4)
 
 
-####2. Describe how (and identify where in your code) you implemented some kind of filter for false positives and some method for combining overlapping bounding boxes.
+#### 2. Describe how (and identify where in your code) you implemented some kind of filter for false positives and some method for combining overlapping bounding boxes.
 
 I kept the last 25 bounding boxes from find_car() searches. A queue of size 25 was used, it is initialized in `pipeline.py` line 184.
 
@@ -144,9 +144,9 @@ Finally the heatmap is converted into single labels using the `label()` method f
 
 ---
 
-###Discussion
+### Discussion
 
-####1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
+#### 1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
 
 I believe I could improve the results by using overlapping windows and maybe one more scale during the search. This would make the processing slower though. 
 
@@ -156,4 +156,4 @@ The pipeline may fail in a more curvy road or one with steep ramps, as the searc
 
 My false detections method is pretty fragile, and it was optimized for this specific project video. The false detection rejection can be improved by keeping track of individual cars and the time each car has beeen in sight. A weak detection in an area where a car has been detected for many frames is probably OK, but a weak detection where there hasn't been other cars before is more likely to be a false positive.
 
-If I pursue this project forward I would test with other videos and experiment using a CNN or RNN as the classifier.
+If I pursue this project further I would test with other videos and experiment using a CNN or RNN as the classifier.
