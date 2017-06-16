@@ -11,13 +11,13 @@ from sklearn.svm import LinearSVC
 from sklearn.model_selection import train_test_split
 from pipeline import *
 
-#TODO: separate and hangle GTI images as they are from a Video sequence
+#TODO: separate and handle GTI images as they are from a Video sequence
 notcar_image_names = glob.glob('./data/non-vehicles/*/*.png')
 car_image_names = glob.glob('./data/vehicles/*/*.png')
 print(len(notcar_image_names), len(car_image_names))
 
 
-### TODO: Tweak these parameters and see how the results change.
+### Hyper parameters
 color_space = 'YCrCb' # Can be RGB, HSV, LUV, HLS, YUV, YCrCb
 orient = 9  # HOG orientations
 pix_per_cell = 8 # HOG pixels per cell
