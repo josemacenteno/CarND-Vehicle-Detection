@@ -35,7 +35,7 @@ y_start_stop = [ystart, ystop] # Min and max in y to search in slide_window()
 scale = 1.5
 
 # Define a single function that can extract features using hog sub-sampling and make predictions
-def find_cars(img, in_color_channel, ystart, ystop, scale, svc, X_scaler, orient, pix_per_cell, cell_per_block, color_space, spatial_size, hist_bins):
+def find_cars(img, in_color_channel, ystart, ystop, scale, svc, X_scaler, orient, pix_per_cell, cell_per_block, color_space, spatial_size, hist_bins, return_all_windows=False):
     #img = img.astype(np.float32)/255
     
     img_tosearch = img[ystart:ystop,:,:]
@@ -68,6 +68,7 @@ def find_cars(img, in_color_channel, ystart, ystop, scale, svc, X_scaler, orient
     
     # Initialize a list to append window positions to
     window_list = []    
+    print(nxsteps, nysteps)
     for xb in range(nxsteps):
         for yb in range(nysteps):
             ypos = yb*cells_per_step
@@ -81,18 +82,21 @@ def find_cars(img, in_color_channel, ystart, ystop, scale, svc, X_scaler, orient
             xleft = xpos*pix_per_cell
             ytop = ypos*pix_per_cell
 
-            # Extract the image patch
-            subimg = cv2.resize(ctrans_tosearch[ytop:ytop+window, xleft:xleft+window], (64,64))
-          
-            # Get color features
-            spatial_features = bin_spatial(subimg, size=spatial_size)
-            hist_features = color_hist(subimg, nbins=hist_bins)
+            if return_all_windows:
+                test_prediction = 1
+            else:
+                # Extract the image patch
+                subimg = cv2.resize(ctrans_tosearch[ytop:ytop+window, xleft:xleft+window], (64,64))
+              
+                # Get color features
+                spatial_features = bin_spatial(subimg, size=spatial_size)
+                hist_features = color_hist(subimg, nbins=hist_bins)
 
-            # Scale features and make a prediction
-            test_features = X_scaler.transform(np.hstack((spatial_features, hist_features, hog_features)).reshape(1, -1))    
-            #test_features = X_scaler.transform(np.hstack((shape_feat, hist_feat)).reshape(1, -1))    
-            test_prediction = svc.predict(test_features)
-            
+                # Scale features and make a prediction
+                test_features = X_scaler.transform(np.hstack((spatial_features, hist_features, hog_features)).reshape(1, -1))    
+                #test_features = X_scaler.transform(np.hstack((shape_feat, hist_feat)).reshape(1, -1))    
+                test_prediction = svc.predict(test_features)
+                
             if test_prediction == 1:
                 xbox_left = np.int(xleft*scale)
                 ytop_draw = np.int(ytop*scale)

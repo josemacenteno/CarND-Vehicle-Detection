@@ -14,6 +14,9 @@ The goals / steps of this project are the following:
 [hog_o1]: ./output_images/hog/original_test1.jpg "Original test1"
 [hog_t1]: ./output_images/hog/hog_test1.jpg      "hog test1"
 
+[win_1]: ./output_images/win_search/test1.jpg "Sliding window on test1"
+[win_small_1]: ./output_images/win_search/small_test1.jpg      "Small sliding window on test1"
+
 [data_car_0]: ./data/vehicles/GTI_Far/image0000.png "car data 0"
 [data_car_1]: ./data/vehicles/GTI_Left/image0009.png "car data 1"
 [data_car_2]: ./data/vehicles/GTI_Left/image0010.png "car data 2"
@@ -99,10 +102,12 @@ Tha code after the fitting the classifier simply stores the classifier state in 
 
 The main code to ferform the sliding window search is in the function `find_car` in `pipeline.py` lines 38 to 85. The image is first cropped by the ystart and ystop parameters, then resized based on a scaling factor. The scale fator implies a different window size with respect to the original image. In the main pipeline code I make two searches with find_car(), one for small windows in the center of the image (where far away cars would appear, and another search with larger windows on the bottom half of the image, which is better to identify close, therefore large, cars.
 
-There is no overlap in my windows to make the search faster. Here are ac ouple of images to illustrate the corresponding windows would cut the image for the classifier:
+There windows advance through the image with a 3/4 overlap over the closest window.  Here is an illustration of the window size used and the grid searched for each of the scales applied:
 
-#TODO: Add images for the final windows used
-![alt text][image3]
+![alt text][win_1]
+
+
+![alt text][win_small_1]
 
 #### 2. Show some examples of test images to demonstrate how your pipeline is working.  What did you do to optimize the performance of your classifier?
 
