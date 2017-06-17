@@ -42,6 +42,43 @@ from pipeline import *
 # cv2.imwrite(output_name, undistorted)
 # cv2.imshow('img',undistorted)
 # cv2.waitKey(50)
+
+
+#HOG
+# print("Drawing detected windows on a test image 1")
+# for image_name in glob.glob('./test_images/test*.jpg'):
+#     print(image_name)
+#     image =  cv2.imread(image_name) 
+#     draw_img = image.copy()
+#     in_color_channel = 'BGR'
+#     windows = find_cars(image, in_color_channel, ystart, ystop, scale, svc, X_scaler, orient,
+#                         pix_per_cell, cell_per_block, color_space, spatial_size, hist_bins) 
+#     small_windows = find_cars(image, in_color_channel, ystart_small, ystop_small, scale_small,
+#                         svc, X_scaler, orient, pix_per_cell, cell_per_block, color_space,
+#                         spatial_size, hist_bins)  
+
+#     # Draw the boxes on the image
+#     for bbox in windows + small_windows:
+#         cv2.rectangle(draw_img, bbox[0], bbox[1], (255,0,0), 6)
+
+#     small = cv2.resize(cv2.imread(image_name),(256, 144))
+#     small_p = cv2.resize(draw_img,(256, 144))
+#     output_name = "./output_images/detected/original_" + image_name.split('/')[-1]
+#     cv2.imwrite(output_name, small)
+#     output_name = "./output_images/detected/detected_" + image_name.split('/')[-1]
+#     cv2.imwrite(output_name, small_p)
+#     output_name = "./output_images/detected/" + image_name.split('/')[-1]
+#     cv2.imwrite(output_name, draw_img)
+
+#     cv2.imshow('img',draw_img)
+#     cv2.waitKey(50)
+
+
+
+
+
+
+##Illustrate sliding window search
 print("Drawing search windows on a test image 1")
 image_name = './test_images/test1.jpg'
 print(image_name)
@@ -95,13 +132,7 @@ for image_name in glob.glob('./test_images/test*.jpg'):
     for bbox in windows + small_windows:
         cv2.rectangle(draw_img, bbox[0], bbox[1], (255,0,0), 6)
 
-    small = cv2.resize(cv2.imread(image_name),(256, 144))
-    small_p = cv2.resize(draw_img,(256, 144))
-    output_name = "./output_images/detected/original_" + image_name.split('/')[-1]
-    cv2.imwrite(output_name, small)
     output_name = "./output_images/detected/detected_" + image_name.split('/')[-1]
-    cv2.imwrite(output_name, small_p)
-    output_name = "./output_images/detected/" + image_name.split('/')[-1]
     cv2.imwrite(output_name, draw_img)
 
     cv2.imshow('img',draw_img)
