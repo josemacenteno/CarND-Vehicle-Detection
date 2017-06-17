@@ -54,6 +54,13 @@ The goals / steps of this project are the following:
 [label_5]: ./output_images/detected/label_test5.jpg "Heatmap on test5"
 [label_6]: ./output_images/detected/label_test6.jpg "Heatmap on test6"
 
+[piped_1]: ./output_images/pipelined/piped_test1.jpg "Result on test1"
+[piped_2]: ./output_images/pipelined/piped_test2.jpg "Result on test2"
+[piped_3]: ./output_images/pipelined/piped_test3.jpg "Result on test3"
+[piped_4]: ./output_images/pipelined/piped_test4.jpg "Result on test4"
+[piped_5]: ./output_images/pipelined/piped_test5.jpg "Result on test5"
+[piped_6]: ./output_images/pipelined/piped_test6.jpg "Result on test6"
+
 [data_car_0]: ./data/vehicles/GTI_Far/image0000.png "car data 0"
 [data_car_1]: ./data/vehicles/GTI_Left/image0009.png "car data 1"
 [data_car_2]: ./data/vehicles/GTI_Left/image0010.png "car data 2"
@@ -180,17 +187,47 @@ If persistance is activated the last 25 detections will be combined with the new
 
 Finally the heatmap is converted into single labels using the `label()` method from the scipy library. The labels are drawn onto the images and this is the final result of the pipeline.
 
-#TODO: replace with my own examples.
 ### Here are six test images and their corresponding heatmaps:
-
 
 ![alt text][small_1]     ![alt text][heat_1]
 
+![alt text][small_2]     ![alt text][heat_2]
+
+![alt text][small_3]     ![alt text][heat_3]
+
+![alt text][small_4]     ![alt text][heat_4]
+
+![alt text][small_5]     ![alt text][heat_5]
+
+![alt text][small_6]     ![alt text][heat_6]
+
 ### Here is the output of `scipy.ndimage.measurements.label()` on the integrated heatmap from all six frames:
-![alt text][image6]
+
+![alt text][small_1]     ![alt text][label_1]
+
+![alt text][small_2]     ![alt text][label_2]
+
+![alt text][small_3]     ![alt text][label_3]
+
+![alt text][small_4]     ![alt text][label_4]
+
+![alt text][small_5]     ![alt text][label_5]
+
+![alt text][small_6]     ![alt text][label_6]
 
 ### Here the resulting bounding boxes are drawn onto the last frame in the series:
-![alt text][image7]
+
+![alt text][small_1]     ![alt text][piped_1]
+
+![alt text][small_2]     ![alt text][piped_2]
+
+![alt text][small_3]     ![alt text][piped_3]
+
+![alt text][small_4]     ![alt text][piped_4]
+
+![alt text][small_5]     ![alt text][piped_5]
+
+![alt text][small_6]     ![alt text][piped_6]
 
 
 
