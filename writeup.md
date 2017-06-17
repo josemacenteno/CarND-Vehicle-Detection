@@ -72,14 +72,6 @@ The goals / steps of this project are the following:
 [data_notcar_3]: ./data/non-vehicles/Extras/extra3.png "notcar data 3"
 [data_notcar_4]: ./data/non-vehicles/Extras/extra4.png "notcar data 4"
 
-[image1]: ./examples/car_not_car.png
-[image2]: ./examples/HOG_example.jpg
-[image3]: ./examples/sliding_windows.jpg
-[image4]: ./examples/sliding_window.jpg
-[image5]: ./examples/bboxes_and_heat.png
-[image6]: ./examples/labels_map.png
-[image7]: ./examples/output_bboxes.png
-[video1]: ./project_video.mp4
 
 ## [Rubric](https://review.udacity.com/#!/rubrics/513/view) Points
 ### Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
@@ -111,10 +103,6 @@ I started by reading in all the `vehicle` and `non-vehicle` images.  Here is an 
 I experimented on the quiz from class to choose the color space YCrCb, as it gave the best results measured by the SVC model accuracy on the a random training set. 
 
 In the quiz and the project I used  `skimage.feature.hog()`. The call to this function is in then `train.py` file, between lines 69 and 72 and `pipeline.py` between lines 117 and 134.
-
-
-
-![alt text][image2]
 
 #### 2. Explain how you settled on your final choice of HOG parameters.
 
