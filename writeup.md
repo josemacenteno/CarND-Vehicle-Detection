@@ -17,12 +17,42 @@ The goals / steps of this project are the following:
 [win_1]: ./output_images/win_search/test1.jpg "Sliding window on test1"
 [win_small_1]: ./output_images/win_search/small_test1.jpg      "Small sliding window on test1"
 
-[detect_win_1]: ./output_images/detected/detected_test1.jpg "Detected windows on test1"
-[detect_win_2]: ./output_images/detected/detected_test2.jpg "Detected windows on test2"
-[detect_win_3]: ./output_images/detected/detected_test3.jpg "Detected windows on test3"
-[detect_win_4]: ./output_images/detected/detected_test4.jpg "Detected windows on test4"
-[detect_win_5]: ./output_images/detected/detected_test5.jpg "Detected windows on test5"
-[detect_win_6]: ./output_images/detected/detected_test6.jpg "Detected windows on test6"
+[detect_win_1]: ./output_images/detected/test1.jpg "Detected windows on test1"
+[detect_win_2]: ./output_images/detected/test2.jpg "Detected windows on test2"
+[detect_win_3]: ./output_images/detected/test3.jpg "Detected windows on test3"
+[detect_win_4]: ./output_images/detected/test4.jpg "Detected windows on test4"
+[detect_win_5]: ./output_images/detected/test5.jpg "Detected windows on test5"
+[detect_win_6]: ./output_images/detected/test6.jpg "Detected windows on test6"
+
+
+[detect_1]: ./output_images/detected/detected_test1.jpg "Detected windows on test1"
+[detect_2]: ./output_images/detected/detected_test2.jpg "Detected windows on test2"
+[detect_3]: ./output_images/detected/detected_test3.jpg "Detected windows on test3"
+[detect_4]: ./output_images/detected/detected_test4.jpg "Detected windows on test4"
+[detect_5]: ./output_images/detected/detected_test5.jpg "Detected windows on test5"
+[detect_6]: ./output_images/detected/detected_test6.jpg "Detected windows on test6"
+
+
+[small_1]: ./output_images/detected/original_test1.jpg "Small test1"
+[small_2]: ./output_images/detected/original_test2.jpg "Small test2"
+[small_3]: ./output_images/detected/original_test3.jpg "Small test3"
+[small_4]: ./output_images/detected/original_test4.jpg "Small test4"
+[small_5]: ./output_images/detected/original_test5.jpg "Small test5"
+[small_6]: ./output_images/detected/original_test6.jpg "Small test6"
+
+[heat_1]: ./output_images/detected/heatmap_test1.jpg "Heatmap on test1"
+[heat_2]: ./output_images/detected/heatmap_test2.jpg "Heatmap on test2"
+[heat_3]: ./output_images/detected/heatmap_test3.jpg "Heatmap on test3"
+[heat_4]: ./output_images/detected/heatmap_test4.jpg "Heatmap on test4"
+[heat_5]: ./output_images/detected/heatmap_test5.jpg "Heatmap on test5"
+[heat_6]: ./output_images/detected/heatmap_test6.jpg "Heatmap on test6"
+
+[label_1]: ./output_images/detected/label_test1.jpg "Heatmap on test1"
+[label_2]: ./output_images/detected/label_test2.jpg "Heatmap on test2"
+[label_3]: ./output_images/detected/label_test3.jpg "Heatmap on test3"
+[label_4]: ./output_images/detected/label_test4.jpg "Heatmap on test4"
+[label_5]: ./output_images/detected/label_test5.jpg "Heatmap on test5"
+[label_6]: ./output_images/detected/label_test6.jpg "Heatmap on test6"
 
 [data_car_0]: ./data/vehicles/GTI_Far/image0000.png "car data 0"
 [data_car_1]: ./data/vehicles/GTI_Left/image0009.png "car data 1"
@@ -151,9 +181,10 @@ If persistance is activated the last 25 detections will be combined with the new
 Finally the heatmap is converted into single labels using the `label()` method from the scipy library. The labels are drawn onto the images and this is the final result of the pipeline.
 
 #TODO: replace with my own examples.
-### Here are six frames and their corresponding heatmaps:
+### Here are six test images and their corresponding heatmaps:
 
-![alt text][image5]
+
+![alt text][small_1]     ![alt text][heat_1]
 
 ### Here is the output of `scipy.ndimage.measurements.label()` on the integrated heatmap from all six frames:
 ![alt text][image6]

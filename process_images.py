@@ -132,11 +132,46 @@ for image_name in glob.glob('./test_images/test*.jpg'):
     for bbox in windows + small_windows:
         cv2.rectangle(draw_img, bbox[0], bbox[1], (255,0,0), 6)
 
-    output_name = "./output_images/detected/detected_" + image_name.split('/')[-1]
+    output_name = "./output_images/detected/" + image_name.split('/')[-1]
     cv2.imwrite(output_name, draw_img)
 
     cv2.imshow('img',draw_img)
     cv2.waitKey(50)
+
+#Heat map
+    heat = np.zeros_like(image[:,:,0]).astype(np.float)
+    # Add heat to each box in box list
+    heat = add_heat(heat, windows + small_windows)
+
+    # Visualize the heatmap when displaying 
+    heatmap = 1/10*heat
+    cv2.imshow('img',heatmap)
+    cv2.waitKey(50)
+
+    # Find final boxes from heatmap using label function
+    labels = label(heat)  
+    lablesmap = labels[0]/2
+
+    print(np.amax(lablesmap))
+    cv2.imshow('img',lablesmap)
+    cv2.waitKey(50)
+
+    small = cv2.resize(image,(256, 144))
+    small_hm = cv2.resize(heatmap*255,(256, 144))
+    small_l = cv2.resize(lablesmap*255,(256, 144))
+    small_d = cv2.resize(draw_img,(256, 144))
+    output_name = "./output_images/detected/original_" + image_name.split('/')[-1]
+    cv2.imwrite(output_name, small)
+    output_name = "./output_images/detected/heatmap_" + image_name.split('/')[-1]
+    cv2.imwrite(output_name, small_hm)
+    output_name = "./output_images/detected/label_" + image_name.split('/')[-1]
+    cv2.imwrite(output_name, small_l)
+    output_name = "./output_images/detected/detected_" + image_name.split('/')[-1]
+    cv2.imwrite(output_name, small_d)
+
+#     cv2.imshow('img',draw_img)
+#     cv2.waitKey(50)
+
 
 #Aplying pipeline to all test images
 print("Applying pipeline to test images from ./test_images/...")
