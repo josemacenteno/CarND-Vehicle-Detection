@@ -83,7 +83,7 @@ Here is an example using the `YCrCb` color space and HOG parameters of `orientat
 
 #### 2. Explain how you settled on your final choice of HOG parameters.
 
-I started form the parameters that worked best in the quizes and turns out those gave good enough values for most cars. These are the three parameters used during training and pipeline:
+I started from the parameters that worked best in the quizes and turns out those gave good enough values for most cars. These are the three parameters used during training and pipeline:
 
 ```
 orient = 9  # HOG orientations
@@ -95,19 +95,19 @@ I also used histogram and spatial features as suggested from the quizes and exce
 
 #### 3. Describe how (and identify where in your code) you trained a classifier using your selected HOG features (and color features if you used them).
 
-The tagets are defined in the `train.py` file line 107 as 1 for cars and 0 for not_cars. The set of features and targets is split using train_test_split from sklearn. 
+The targets are defined in the `train.py` file line 107 as 1 for cars and 0 for not_cars. The set of features and targets is split using train_test_split from sklearn. 
 
 Finally the actual training of a linear classifier is defined in `train.py` between the lines 119 and 125.
 
-Tha code after the fitting the classifier simply stores the classifier state in a pickle file, together with all the parameters used to define the "feature extraction" and the scaler. A pickle file is the recommended way to store a trained classifier according to sklearn documentation. 
+Tha code after fitting the classifier simply stores the classifier state in a pickle file, together with all the parameters used to define the "feature extraction" and the scaler. A pickle file is the recommended way to store a trained classifier according to sklearn documentation. 
 
 ### Sliding Window Search
 
 #### 1. Describe how (and identify where in your code) you implemented a sliding window search.  How did you decide what scales to search and how much to overlap windows?
 
-The main code to ferform the sliding window search is in the function `find_car` in `pipeline.py` lines 38 to 85. The image is first cropped by the ystart and ystop parameters, then resized based on a scaling factor. The scale fator implies a different window size with respect to the original image. In the main pipeline code I make two searches with find_car(), one for small windows in the center of the image (where far away cars would appear, and another search with larger windows on the bottom half of the image, which is better to identify close, therefore large, cars.
+The main code to perform the sliding window search is in the function `find_car` in `pipeline.py` lines 38 to 85. The image is first cropped by the ystart and ystop parameters, then resized based on a scaling factor. The scale factor implies a different window size with respect to the original image. In the main pipeline code I make two searches with find_car(), one for small windows in the center of the image (where far away cars would appear, and another search with larger windows on the bottom half of the image, which is better to identify close, therefore large, cars.
 
-There windows advance through the image with a 3/4 overlap over the closest window.  Here is an illustration of the window size used and the grid searched for each of the scales applied:
+There, windows advance through the image with a 3/4 overlap over the closest window.  Here is an illustration of the window size used and the grid searched for each of the scales applied:
 
 ![alt text][win_1]
 
@@ -116,7 +116,7 @@ There windows advance through the image with a 3/4 overlap over the closest wind
 
 #### 2. Show some examples of test images to demonstrate how your pipeline is working.  What did you do to optimize the performance of your classifier?
 
-Ultimately I searched on two scales using YCrCb 3-channel HOG features plus spatially binned color and histograms of color in the feature vector, which provided a nice result.  Here are some example images:
+Ultimately, I searched on two scales using YCrCb 3-channel HOG features plus spatially binned color and histograms of color in the feature vector, which provided a nice result.  Here are some example images:
 
 ![alt text][detect_win_1]
 
@@ -130,7 +130,7 @@ Ultimately I searched on two scales using YCrCb 3-channel HOG features plus spat
 
 ![alt text][detect_win_6]
 
-I based my hyperparameters on the same parameters that yield the best accuracy on quizes, and I only adjusted the window scaling to identify small cars, which originallt where missed often.
+I based my hyperparameters on the same parameters that yield the best accuracy on quizzes, and I only adjusted the window scaling to identify small cars, which originally where missed often.
 
 ---
 
@@ -148,7 +148,7 @@ This queue is used when a parameter persistance=True is passed to the pipeline m
 
 If persistance is activated the last 25 detections will be combined with the new detections to make a heat map. From the heat map a threshold is used equal to the number of detections already in the queue.
 
-Finally the heatmap is converted into single labels using the `label()` method form the scipy library. The labels are drawn onto the images and this is the final result of the pipeline.
+Finally the heatmap is converted into single labels using the `label()` method from the scipy library. The labels are drawn onto the images and this is the final result of the pipeline.
 
 #TODO: replace with my own examples.
 ### Here are six frames and their corresponding heatmaps:
@@ -175,6 +175,6 @@ I can also play more with the C parameter in the Linear classifier, or try other
 
 The pipeline may fail in a more curvy road or one with steep ramps, as the search might not correspond to the new conditions. 
 
-My false detections method is pretty fragile, and it was optimized for this specific project video. The false detection rejection can be improved by keeping track of individual cars and the time each car has beeen in sight. A weak detection in an area where a car has been detected for many frames is probably OK, but a weak detection where there hasn't been other cars before is more likely to be a false positive.
+My false detections method is pretty fragile, and it was optimized for this specific project video. The false detection rejection can be improved by keeping track of individual cars and the time each car has been in sight. A weak detection in an area where a car has been detected for many frames is probably OK, but a weak detection where there hasn't been other cars before is more likely to be a false positive.
 
 If I pursue this project further I would test with other videos and experiment using a CNN or RNN as the classifier.
