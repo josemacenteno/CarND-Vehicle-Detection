@@ -18,11 +18,11 @@ The goals / steps of this project are the following:
 [win_small_1]: ./output_images/win_search/small_test1.jpg      "Small sliding window on test1"
 
 [detect_win_1]: ./output_images/detected/detected_test1.jpg "Detected windows on test1"
-[detect_win_2]: ./output_images/detected/detected_test1.jpg "Detected windows on test2"
-[detect_win_3]: ./output_images/detected/detected_test1.jpg "Detected windows on test3"
-[detect_win_4]: ./output_images/detected/detected_test1.jpg "Detected windows on test4"
-[detect_win_5]: ./output_images/detected/detected_test1.jpg "Detected windows on test5"
-[detect_win_6]: ./output_images/detected/detected_test1.jpg "Detected windows on test6"
+[detect_win_2]: ./output_images/detected/detected_test2.jpg "Detected windows on test2"
+[detect_win_3]: ./output_images/detected/detected_test3.jpg "Detected windows on test3"
+[detect_win_4]: ./output_images/detected/detected_test4.jpg "Detected windows on test4"
+[detect_win_5]: ./output_images/detected/detected_test5.jpg "Detected windows on test5"
+[detect_win_6]: ./output_images/detected/detected_test6.jpg "Detected windows on test6"
 
 [data_car_0]: ./data/vehicles/GTI_Far/image0000.png "car data 0"
 [data_car_1]: ./data/vehicles/GTI_Left/image0009.png "car data 1"
