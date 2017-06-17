@@ -17,6 +17,13 @@ The goals / steps of this project are the following:
 [win_1]: ./output_images/win_search/test1.jpg "Sliding window on test1"
 [win_small_1]: ./output_images/win_search/small_test1.jpg      "Small sliding window on test1"
 
+[detect_win_1]: ./output_images/detected/detected_test1.jpg "Detected windows on test1"
+[detect_win_2]: ./output_images/detected/detected_test1.jpg "Detected windows on test2"
+[detect_win_3]: ./output_images/detected/detected_test1.jpg "Detected windows on test3"
+[detect_win_4]: ./output_images/detected/detected_test1.jpg "Detected windows on test4"
+[detect_win_5]: ./output_images/detected/detected_test1.jpg "Detected windows on test5"
+[detect_win_6]: ./output_images/detected/detected_test1.jpg "Detected windows on test6"
+
 [data_car_0]: ./data/vehicles/GTI_Far/image0000.png "car data 0"
 [data_car_1]: ./data/vehicles/GTI_Left/image0009.png "car data 1"
 [data_car_2]: ./data/vehicles/GTI_Left/image0010.png "car data 2"
@@ -73,7 +80,7 @@ In the quiz and the project I used  `skimage.feature.hog()` parameters (`orienta
 
 Here is an example using the `YCrCb` color space and HOG parameters of `orientations=9`, `pixels_per_cell=(8, 8)` and `cells_per_block=(2, 2)`:
 
-
+#TODO: replace with my own example
 ![alt text][image2]
 
 #### 2. Explain how you settled on your final choice of HOG parameters.
@@ -113,9 +120,20 @@ There windows advance through the image with a 3/4 overlap over the closest wind
 
 Ultimately I searched on two scales using YCrCb 3-channel HOG features plus spatially binned color and histograms of color in the feature vector, which provided a nice result.  Here are some example images:
 
-#TODO: Replace with actual images from my video pipeline
+![alt text][detect_win_1]
 
-![alt text][image4]
+![alt text][detect_win_2]
+
+![alt text][detect_win_3]
+
+![alt text][detect_win_4]
+
+![alt text][detect_win_5]
+
+![alt text][detect_win_6]
+
+I based my hyperparameters on the same parameters that yield the best accuracy on quizes, and I only adjusted the window scaling to identify small cars, which originallt where missed often.
+
 ---
 
 ### Video Implementation

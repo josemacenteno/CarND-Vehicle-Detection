@@ -67,8 +67,7 @@ def find_cars(img, in_color_channel, ystart, ystop, scale, svc, X_scaler, orient
     hog3 = get_hog_features(ch3, orient, pix_per_cell, cell_per_block, feature_vec=False)
     
     # Initialize a list to append window positions to
-    window_list = []    
-    print(nxsteps, nysteps)
+    window_list = []
     for xb in range(nxsteps):
         for yb in range(nysteps):
             ypos = yb*cells_per_step
@@ -142,8 +141,8 @@ def bin_spatial(img, size=(32, 32)):
     return features
 
 
+
 # Define a function to compute color histogram features 
-#TODO: make sure images are always 0-255 
 def color_hist(img, nbins=32, bins_range=(0, 256)):
     # Compute the histogram of the color channels separately
     channel1_hist = np.histogram(img[:,:,0], bins=nbins, range=bins_range)
